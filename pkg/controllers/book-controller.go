@@ -22,7 +22,6 @@ func HealthCheck(w http.ResponseWriter, req *http.Request) {
 }
 func GetBook(w http.ResponseWriter, req *http.Request) {
 	newBooks := models.GetAllBooks()
-	fmt.Println(newBooks)
 	res, _ := json.Marshal(newBooks)
 	utils.HeaderWriter(w)
 	w.WriteHeader(http.StatusOK)
@@ -56,15 +55,12 @@ func CreateBook(w http.ResponseWriter, req *http.Request) {
 func DeleteBook(w http.ResponseWriter, req *http.Request) {
 	vars := mux.Vars(req)
 	bookId := vars["bookId"]
-	ID, err := strconv.ParseInt(bookId, 0, 0)
+	_, err := strconv.ParseInt(bookId, 0, 0)
 	if err != nil {
 		fmt.Println("error while parsing")
 	}
-	bookDetails := models.DeleteBook(ID)
-	res, _ := json.Marshal(bookDetails)
 	utils.HeaderWriter(w)
-	w.WriteHeader(http.StatusOK)
-	w.Write(res)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func UpdateBook(w http.ResponseWriter, req *http.Request) {
