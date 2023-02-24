@@ -13,8 +13,16 @@ import (
 
 var NewBook models.Book
 
+func HealthCheck(w http.ResponseWriter, req *http.Request) {
+	healthCheck := "API is working"
+	res, _ := json.Marshal(healthCheck)
+	utils.HeaderWriter(w)
+	w.WriteHeader(http.StatusOK)
+	w.Write(res)
+}
 func GetBook(w http.ResponseWriter, req *http.Request) {
 	newBooks := models.GetAllBooks()
+	fmt.Println(newBooks)
 	res, _ := json.Marshal(newBooks)
 	utils.HeaderWriter(w)
 	w.WriteHeader(http.StatusOK)
